@@ -1,0 +1,95 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2017-11-17T22:38:51Z",
+    "title": "PetMatch"
+  },
+  "host": "e4v7rdwl7l.execute-api.us-east-1.amazonaws.com",
+  "basePath": "/Test",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "SSET",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "credentials": "replace with your own role",
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseTemplates": {
+                "application/json": "#set($inputRoot = $input.path('$'))\n{\n    \"result\": [\n        #foreach($elem in $inputRoot.Items) {\n            \"breed\": \"$elem.breed.S\",\n            \"query\": \"$elem.SSET.S\"\n        }#if($foreach.hasNext),#end\n\t#end\n    ]\n}"
+              }
+            }
+          },
+          "uri": "arn:aws:apigateway:us-east-1:dynamodb:action/Query",
+          "passthroughBehavior": "when_no_templates",
+          "httpMethod": "POST",
+          "requestTemplates": {
+            "application/json": "{\n    \"TableName\": \"PetMatch\",\n    \"IndexName\": \"SSET-index\",\n    \"KeyConditionExpression\": \"SSET = :v1\",\n    \"ExpressionAttributeValues\": {\n        \":v1\": {\n            \"S\": \"$input.params('SSET')\"\n        }\n    }\n}"
+          },
+          "type": "aws"
+        }
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "credentials": "replace with your own role",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "uri": "arn:aws:apigateway:us-east-1:dynamodb:action/PutItem",
+          "passthroughBehavior": "when_no_templates",
+          "httpMethod": "POST",
+          "requestTemplates": {
+            "application/json": "{ \n    \"TableName\": \"PetMatch\",\n    \"Item\": {\n        \"breed\": {\n            \"S\": \"$input.path('$.breed')\"\n            },\n        \"species\": {\n            \"S\": \"$input.path('$.species')\"\n        },\n        \"size\": {\n            \"S\": \"$input.path('$.size')\"\n        },\n        \"energy\": {\n            \"S\": \"$input.path('$.energy')\"\n        },\n        \"temperament\": {\n            \"S\": \"$input.path('$.temperament')\"\n        },\n        \"SSET\": {\n            \"S\": \"$input.path('$.SSET')\"\n        }\n    }\n}"
+          },
+          "type": "aws"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Empty": {
+      "type": "object",
+      "title": "Empty Schema"
+    }
+  }
+}

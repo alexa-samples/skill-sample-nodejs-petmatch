@@ -1,0 +1,12 @@
+{
+  "name": "pet-match-sample-skill-nodejs",
+  "version": "1.0.0",
+  "description": "Pet Match Sample Skill that demonstrates, Dialog Managment, Synonyms, and Memory.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "alexa-sdk": "^1.0.0",
+    "https": "^1.0.0"
+  }
+}

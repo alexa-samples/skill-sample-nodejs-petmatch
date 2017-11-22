@@ -1,0 +1,435 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "pet match",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "PetMatchIntent",
+          "slots": [
+            {
+              "name": "pet",
+              "type": "petType"
+            },
+            {
+              "name": "size",
+              "type": "sizeType"
+            },
+            {
+              "name": "temperament",
+              "type": "temperamentType"
+            },
+            {
+              "name": "I_Want",
+              "type": "IWantType"
+            },
+            {
+              "name": "energy",
+              "type": "energyType"
+            },
+            {
+              "name": "article",
+              "type": "articleType"
+            },
+            {
+              "name": "comparison",
+              "type": "comparisonType"
+            },
+            {
+              "name": "amount",
+              "type": "AMAZON.NUMBER"
+            },
+            {
+              "name": "units",
+              "type": "unitsType"
+            },
+            {
+              "name": "shedding",
+              "type": "sheddingType"
+            },
+            {
+              "name": "location",
+              "type": "locationType"
+            },
+            {
+              "name": "at_the",
+              "type": "atTheType"
+            }
+          ],
+          "samples": [
+            "find a pet",
+            "match me",
+            "{size} {pet}",
+            "for a {pet}",
+            "{I_Want} {article} {pet} that is {temperament} and {energy}",
+            "{I_Want} {article} {pet} that's {comparison} {amount} {units}",
+            "{article} {shedding} {size} {pet}",
+            "{article} {size} {shedding} {pet}",
+            "{I_Want} to {energy} {at_the} {location}",
+            "{energy} {pet}",
+            "{I_Want} {article} {energy} {pet}",
+            "{I_Want} {article} {pet} that's {comparison} {amount} {units} tall",
+            "{I_Want} {article} {temperament} dog that is {energy} energy"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "values": [
+            {
+              "name": {
+                "value": "a",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "an",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "the",
+                "synonyms": []
+              }
+            }
+          ],
+          "name": "articleType"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "at the",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "on the",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "around the",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "in the",
+                "synonyms": []
+              }
+            }
+          ],
+          "name": "atTheType"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "greater than",
+                "synonyms": [
+                  "more",
+                  "more than",
+                  "over"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "less than",
+                "synonyms": [
+                  "less",
+                  "under",
+                  "shorter than"
+                ]
+              }
+            }
+          ],
+          "name": "comparisonType"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "low",
+                "synonyms": [
+                  "to cuddle with",
+                  "to watch netflix with",
+                  "lazy"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "med",
+                "synonyms": [
+                  "for my apartment",
+                  "fun to play with",
+                  "tug of war",
+                  "plays tug of war"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "high",
+                "synonyms": [
+                  "that I can run with",
+                  "play frisbee",
+                  "run",
+                  "hike",
+                  "go hiking",
+                  "play fetch",
+                  "energetic",
+                  "high energy"
+                ]
+              }
+            }
+          ],
+          "name": "energyType"
+        },
+        {
+          "values": [
+            {
+              "id": "false",
+              "name": {
+                "value": "don't want",
+                "synonyms": [
+                  "i hate",
+                  "i don't want",
+                  "i don't like",
+                  "i do not like"
+                ]
+              }
+            },
+            {
+              "id": "true",
+              "name": {
+                "value": "do want",
+                "synonyms": [
+                  "i like",
+                  "how about",
+                  "we would like",
+                  "we like",
+                  "let's find",
+                  "i prefer",
+                  "my favorite is",
+                  "i want"
+                ]
+              }
+            }
+          ],
+          "name": "IWantType"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "beach",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "mountains",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "dog park",
+                "synonyms": []
+              }
+            },
+            {
+              "name": {
+                "value": "trail",
+                "synonyms": []
+              }
+            }
+          ],
+          "name": "locationType"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "dog",
+                "synonyms": [
+                  "puppy",
+                  "doggie",
+                  "canine",
+                  "canis familiaris",
+                  "canis"
+                ]
+              }
+            }
+          ],
+          "name": "petType"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "no",
+                "synonyms": [
+                  "hypoallergenic"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "low",
+                "synonyms": [
+                  "groom"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "high",
+                "synonyms": [
+                  "no hair cutting",
+                  "mouth full of hair",
+                  "long hair"
+                ]
+              }
+            }
+          ],
+          "name": "sheddingType"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "large",
+                "synonyms": [
+                  "huge",
+                  "truck",
+                  "gigantic",
+                  "eat me out of house",
+                  "scary big",
+                  "ginormous",
+                  "ride",
+                  "waist height"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "medium",
+                "synonyms": [
+                  "bigger than a cat",
+                  "on the bed",
+                  "up to my knees",
+                  "average"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "small",
+                "synonyms": [
+                  "little",
+                  "take on an airplane"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "tiny",
+                "synonyms": [
+                  "cheap to feed",
+                  "teacup",
+                  "pocket",
+                  "memo sized",
+                  "yippy",
+                  "carry in my purse",
+                  "put in my pocket",
+                  "itty bitty"
+                ]
+              }
+            }
+          ],
+          "name": "sizeType"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "watch",
+                "synonyms": [
+                  "adult",
+                  "barks at people"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "guard",
+                "synonyms": [
+                  "to protect me",
+                  "protective"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "family",
+                "synonyms": [
+                  "is kid friendly",
+                  "good with kids",
+                  "family friends",
+                  "gentle with kids"
+                ]
+              }
+            }
+          ],
+          "name": "temperamentType"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "height",
+                "synonyms": [
+                  "inches",
+                  "cm",
+                  "centimeters",
+                  "meters",
+                  "feet"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "weight",
+                "synonyms": [
+                  "pounds",
+                  "kilograms",
+                  "ounces"
+                ]
+              }
+            }
+          ],
+          "name": "unitsType"
+        }
+      ]
+    }
+  }
+}
