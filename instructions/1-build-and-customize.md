@@ -101,7 +101,7 @@ the skill builder.
 in the <a href="../casestudy/interaction-model-part1.json">Interaction Model</a>, then click 
 "Apply Changes" or "Save Model".
 
-9. Click the 'Build Model' Button.
+9. **Click the 'Build Model'** Button.
 
 10.  When your interaction model builds successfully, click on the 
 **Configuration** button to move on to Configuration. In our next step of this 
@@ -182,7 +182,7 @@ target="_blank">detailed walkthrough for setting up your first role for Lambda</
 If you have done this before, set your **Existing role** value to 
 "lambda\_basic\_execution."
 
-8.  Create your lambda function. 
+8.  **Create your lambda function. **
 
 9.  **Copy and paste the <a href="../lambda/custom/index.js" 
 target="_blank">provided code</a> into the Lambda function code box.**  We have 
