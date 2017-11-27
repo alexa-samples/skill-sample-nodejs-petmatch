@@ -84,12 +84,20 @@ var handlers = {
                 // this.response.cardRenderer('Your pet match is ...', `A ${response.result[0].breed}`,
                 //                            dogBreedImage);
 
-                this.response.speak("So a " 
-                    + slotValues.size.resolved + " " 
-                    + slotValues.temperament.resolved + " " 
-                    + slotValues.energy.resolved 
-                    + " energy dog sounds good for you. Consider a " 
-                    + response.result[0].breed);        
+                if( response.result.length > 0 ) {
+                    this.response.speak("So a " 
+                        + slotValues.size.resolved + " " 
+                        + slotValues.temperament.resolved + " " 
+                        + slotValues.energy.resolved 
+                        + " energy dog sounds good for you. Consider a " 
+                        + response.result[0].breed);   
+                } else {
+                    this.response.speak("I'm sorry I could not find a match for a "
+                        + slotValues.size.resolved + " " 
+                        + slotValues.temperament.resolved + " " 
+                        + slotValues.energy.resolved
+                        + " dog");
+                }      
                     
                 console.log("response: ", response);
 
