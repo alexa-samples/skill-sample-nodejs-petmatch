@@ -423,7 +423,7 @@ echosim, or on the device, you'll want to turn off off testing with simulator mo
             "{I_Want} {article} {size} {temperament} to {energy}" will allow the user to provide you with all the slot data you need for the **PetMatchIntent**. You should try to cover all the combinations for each required slot's utterances so the
             user doesn't have to repeat the same answer over and over.  
             
-            <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/petmatch/p1-dm-utterances._TH_.png" />
+            <img src="https://raw.githubusercontent.com/gsandoval/skill-sample-nodejs-petmatch/master/instructions/assets/utterances.png" />
     5.  **Test your new required slot**  
     Open up [echosim.io](http://echosim.io) in a new tab and Say, "Alexa, tell pet match I want a dog to play fetch with". Since you didn't give it the size slot, the skill will prompt you for the size. At this point the call to the Pet Match API will fail so we wont find a match. We need collect the two remaining required slots.
     6.  **Repeat the steps 3 through 5** for the **temperament**, and **energy** slots.
@@ -450,6 +450,6 @@ the more sample utterances you have per slot the more flexible your VUI
 becomes. Your user isn't limited to only provide one slot at a time. If alexa prompts 
 the user for the **size** slot by saying "There are tiny, small, medium, and large 
 dogs which would you like?", but the user says, "I want a big family dog to play fetch 
-with", only the **size** slot will be filled but you missed  the **temperament**, and **energy** slots. Since those are required, the user will be asked to give the same information again. If you add "{I_Want} {article} {size} {temperament} {animal} to {energy}" to **size** slot's, utterances all of the required slots will be filled. For each of your required slots add more utterances.
+with", only the **size** slot will be filled but you missed  the **temperament**, and **energy** slots. Since those are required, the user will be asked to give the same information again. If you add "{I_Want} {article} {size} {temperament} {pet} to {energy}" to **size** slot's, utterances all of the required slots will be filled. For each of your required slots add more utterances.
 
 [![Next](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/button-next._TTH_.png)](./2-entity-resolution.md)
