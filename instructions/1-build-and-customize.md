@@ -101,7 +101,9 @@ the skill builder.
 in the <a href="../casestudy/interaction-model-part1.json">Interaction Model</a>, then click 
 "Apply Changes" or "Save Model".
 
-9.  When your interaction model builds successfully, click on the 
+9. Click the 'Build Model' Button.
+
+10.  When your interaction model builds successfully, click on the 
 **Configuration** button to move on to Configuration. In our next step of this 
 guide, we will be creating our Lambda function in the AWS developer console, but 
 keep this browser tab open, because we will be returning here on 				
@@ -180,23 +182,25 @@ target="_blank">detailed walkthrough for setting up your first role for Lambda</
 If you have done this before, set your **Existing role** value to 
 "lambda\_basic\_execution."
 
-8.  **Copy and paste the <a href="../lambda/custom/index.js" 
+8.  Create your lambda function. 
+
+9.  **Copy and paste the <a href="../lambda/custom/index.js" 
 target="_blank">provided code</a> into the Lambda function code box.**  We have 
 provided the code for this skill on <a href="../lambda/custom/index.js" 
 target="_blank">GitHub</a>. Delete the contents of the code box, and paste the 
 contents of the new code.
 
-9. **Click the Create Function Button.**  
+10. **Click the Create Function Button.**  
 
-10. **Click on Triggers** and click **+ Add Trigger**  
+11. **Click on Triggers** and click **+ Add Trigger**  
 
-11.  **Configure your trigger.** Click in the dashed box, and select Alexa Skills 
+12.  **Configure your trigger.** Click in the dashed box, and select Alexa Skills 
 Kit from the list.  If you don't see Alexa Skills Kit in the list, jump back to 
 step #3 on this page.   
     <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/2-6-configure-your-trigger._TTH_.png" />  
     Once you have selected Alexa Skills Kit, click the **Submit** button.    
 
-12. **After you create the function, the ARN value appears in the top right 
+13. **After you create the function, the ARN value appears in the top right 
 corner. Copy this value for use in the next section of the guide.**
 
     <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/petmatch/p1-copy-arn._TTH_.png" />
