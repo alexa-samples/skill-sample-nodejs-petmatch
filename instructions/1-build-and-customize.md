@@ -450,6 +450,6 @@ the more sample utterances you have per slot the more flexible your VUI
 becomes. Your user isn't limited to only provide one slot at a time. If alexa prompts 
 the user for the **size** slot by saying "There are tiny, small, medium, and large 
 dogs which would you like?", but the user says, "I want a big family dog to play fetch 
-with", only the **size** slot will be filled but you missed  the **temperament**, and **energy** slots. Since those are required, the user will be asked to give the same information again. If you add "{I_Want} {article} {size} {temperament} {animal} to {energy}" to **size** slot's, utterances all of the required slots will be filled. For each of your required slots add more utterances.
+with", only the **size** slot will be filled but you missed  the **temperament**, and **energy** slots. Since those are required, the user will be asked to give the same information again. If you add "{I_Want} {article} {size} {temperament} {pet} to {energy}" to **size** slot's, utterances all of the required slots will be filled. For each of your required slots add more utterances.
 
 [![Next](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/button-next._TTH_.png)](./2-entity-resolution.md)
