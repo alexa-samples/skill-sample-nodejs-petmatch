@@ -182,10 +182,9 @@ const slotsMeta = {
 }
 
 // This data is for testing purposes.
-// When process.env.mode is set 'test' (note: it defaults to 'test')
+// When isTestingWithSimulator is set to true
 // The slots will be auto loaded with this default data.
-// Set the process.env.mode environment variable to anything other
-// than 'test' after setting the slots to 'required' in the skill builder
+// Set isTestingWithSimulator to false to disable to default data
 const defaultData = [
     {
         "name": "pet",
