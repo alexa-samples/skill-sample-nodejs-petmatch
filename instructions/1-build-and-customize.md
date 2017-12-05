@@ -182,7 +182,7 @@ target="_blank">detailed walkthrough for setting up your first role for Lambda</
 If you have done this before, set your **Existing role** value to 
 "lambda\_basic\_execution."
 
-8.  **Create your lambda function. **
+8. **Click the Create Function Button.**  
 
 9.  **Copy and paste the <a href="../lambda/custom/index.js" 
 target="_blank">provided code</a> into the Lambda function code box.**  We have 
@@ -190,7 +190,7 @@ provided the code for this skill on <a href="../lambda/custom/index.js"
 target="_blank">GitHub</a>. Delete the contents of the code box, and paste the 
 contents of the new code.
 
-10. **Click the Create Function Button.**  
+10. **Click Save.**  
 
 11. **Click on Triggers** and click **+ Add Trigger**  
 
