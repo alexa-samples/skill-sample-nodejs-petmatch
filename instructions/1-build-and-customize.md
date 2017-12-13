@@ -179,7 +179,7 @@ created a Lambda function before.  Click the "Get Started" button.)
 
 10. **Configure your trigger.** Look at the column on the left called "Add triggers", and select Alexa Skills Kit from the list.  If you don't see Alexa Skills Kit in the list, jump back to step #3 on this page.
 
-Once you have selected Alexa Skills Kit, scroll down and click the **Add** button. Then click the **Save** button in the top right. You should see a green success message at the top of your screen. Now, click the box that has the Lambda icon followed by the name of your function (HighLowGame if you used our suggestion) and scroll down to the field called "Function code".
+Once you have selected Alexa Skills Kit, scroll down and click the **Add** button. Then click the **Save** button in the top right. You should see a green success message at the top of your screen. Now, click the box that has the Lambda icon followed by the name of your function (petMatch if you used our suggestion) and scroll down to the field called "Function code".
 
 11.  **Copy and paste the [provided code](../lambda/custom/index.js) into the Lambda function code box.**  We have provided the code for this skill on [GitHub](../lambda/custom/index.js).  Delete the contents of the code box, and paste the contents of the new code.
 Click "Save".
