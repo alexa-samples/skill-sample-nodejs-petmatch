@@ -104,7 +104,7 @@
           {
             "id": null,
             "name": {
-              "value": "med",
+              "value": "medium",
               "synonyms": [
                 "for my apartment",
                 "fun to play with",
@@ -457,6 +457,6 @@
         ]
       }
     ],
-    "invocationName": "trip planner"
+    "invocationName": "pet match"
   }
 }
