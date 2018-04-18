@@ -118,7 +118,6 @@ var size = [
     'cheap to feed',
     'teacup',
     'pocket',
-    'memo sized',
     'yippy',
     'carry in my purse',
     'put in my pocket',
