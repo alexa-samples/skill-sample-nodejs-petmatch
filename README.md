@@ -1,7 +1,6 @@
 #  Build An Alexa Pet Match Skill 🇺🇸
 <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/header._TTH_.png" />
 
-
 ## Overview
 
 In this workshop you will create a skill called Pet Match that matches the user
