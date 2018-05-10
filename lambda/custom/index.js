@@ -22,8 +22,13 @@ const LaunchRequestHandler = {
   },
 };
 
-const mythicalCreaturesHandler = {
+const MythicalCreaturesHandler = {
   canHandle(handlerInput) {
+
+    if (handlerInput.requestEnvelope.request.type !== 'IntentRequest'
+      || handlerInput.requestEnvelope.request.intent.name !== 'PetMatchIntent') {
+        return false;
+      }
     
     let isMythicalCreatures = false;
     if(handlerInput.requestEnvelope.request.intent.slots.pet
@@ -158,7 +163,21 @@ const CompletedPetMatchIntent = {
   }
 };
 
-const HelpIntent = {
+const FallbackHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === "IntentRequest"
+      && handlerInput.requestEnvelope.request.intent.name === "AMAZON.FallbackIntent";
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+      .speak("I'm Sorry I didn't understand what you said. This is pet match. " +
+        "I can help find the perfect dog for you. What are two things you're " +
+        "looking for in a dog.")
+      .getResponse();
+  }
+}
+
+const HelpHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
 
@@ -199,13 +218,12 @@ const SessionEndedRequestHandler = {
   },
 };
 
-
 const ErrorHandler = {
   canHandle() {
     return true;
   },
   handle(handlerInput, error) {
-    console.log(`Error handled: ${error.message}`);
+    console.log(`Error handled: ${handlerInput.requestEnvelope.request.type} ${handlerInput.requestEnvelope.request.type === "IntentRequest" ? `intent: ${handlerInput.requestEnvelope.request.intent.name} ` : ""}${error.message}.`);
 
     return handlerInput.responseBuilder
       .speak('Sorry, I can\'t understand the command. Please say again.')
@@ -375,10 +393,11 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
-    mythicalCreaturesHandler,
+    MythicalCreaturesHandler,
     InProgressPetMatchIntent,
     CompletedPetMatchIntent,
-    HelpIntent,
+    HelpHandler,
+    FallbackHandler,
     ExitHandler,
     SessionEndedRequestHandler
   )
