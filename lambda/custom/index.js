@@ -22,6 +22,42 @@ const LaunchRequestHandler = {
   },
 };
 
+const mythicalCreaturesHandler = {
+  canHandle(handlerInput) {
+    
+    let isMythicalCreatures = false;
+    if(handlerInput.requestEnvelope.request.intent.slots.pet
+      && handlerInput.requestEnvelope.request.intent.slots.pet.resolutions
+      && handlerInput.requestEnvelope.request.intent.slots.pet.resolutions.resolutionsPerAuthority[0]
+      && handlerInput.requestEnvelope.request.intent.slots.pet.resolutions.resolutionsPerAuthority[0].values
+      && handlerInput.requestEnvelope.request.intent.slots.pet.resolutions.resolutionsPerAuthority[0].values[0]
+      && handlerInput.requestEnvelope.request.intent.slots.pet.resolutions.resolutionsPerAuthority[0].values[0].value
+      && handlerInput.requestEnvelope.request.intent.slots.pet.resolutions.resolutionsPerAuthority[0].values[0].value.name === 'mythical_creatures') {
+        const attributesManager = handlerInput.attributesManager;
+        const sessionAttributes = attributesManager.getSessionAttributes();
+        sessionAttributes.mythicalCreature = handlerInput.requestEnvelope.request.intent.slots.pet.value;
+        attributesManager.setSessionAttributes(sessionAttributes)
+        isMythicalCreatures = true;
+      }
+
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'PetMatchIntent'
+      && isMythicalCreatures;
+  },
+  handle(handlerInput) {
+    
+    const attributesManager = handlerInput.attributesManager;
+    const sessionAttributes = attributesManager.getSessionAttributes();
+    
+    const outputSpeech = randomPhrase(slotsMeta.pet.invalid_responses).replace('{0}', sessionAttributes.mythicalCreature);
+    
+    return handlerInput.responseBuilder
+      .speak(outputSpeech)
+      .getResponse();
+    
+  }
+};
+
 const InProgressPetMatchIntent = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
@@ -87,57 +123,39 @@ const CompletedPetMatchIntent = {
       && request.intent.name === 'PetMatchIntent'
       && request.dialogState === 'COMPLETED';
   },
-  handle(handlerInput) {
+  async handle(handlerInput) {
     const filledSlots = handlerInput.requestEnvelope.request.intent.slots;
 
     const slotValues = getSlotValues(filledSlots);
-
-    if (slotValues.pet.resolved === 'mythical_creatures') {
-      const outputSpeech = randomPhrase(slotsMeta.pet.invalid_responses).replace('{0}', slotValues.pet.synonym);
-
-      return handlerInput.responseBuilder
-        .speak(outputSpeech)
-        .getResponse();
-    }
-
     const petMatchOptions = buildPetMatchOptions(slotValues);
 
-    return new Promise((resolve, reject) => {
-      httpGet(petMatchOptions).then((response) => {
-        const pastMatch = buildPastMatchObject(response, slotValues);
-        saveValue({
-          data: pastMatch,
-          fieldName: 'past_matches',
-          append: true,
-        }, handlerInput);
+    let outputSpeech = '';
 
-        let outputSpeech;
+    try {
+      const response = await httpGet(petMatchOptions);
 
-        if (response.result.length > 0) {
-          outputSpeech = `So a ${
-            slotValues.size.resolved} ${
-            slotValues.temperament.resolved} ${
-            slotValues.energy.resolved
-          } energy dog sounds good for you. Consider a ${
-            response.result[0].breed}`;
-        } else {
-          outputSpeech = `I am sorry I could not find a match for a ${
-            slotValues.size.resolved} ${
-            slotValues.temperament.resolved} ${
-            slotValues.energy.resolved
-          } dog`;
-        }
+      if(response.result.length > 0) {
+        outputSpeech = `So a ${slotValues.size.resolved} 
+          ${slotValues.temperament.resolved} 
+          ${slotValues.energy.resolved} 
+          energy dog sounds good for you. Consider a 
+          ${response.result[0].breed}`;
+      } else {
+        outputSpeech = `I am sorry I could not find a match 
+          for a ${slotValues.size.resolved} 
+          ${slotValues.temperament.resolved} 
+          ${slotValues.energy.resolved} dog`;
+      }      
+   } catch (error) {
+     outputSpeech = 'I am really sorry. I am unable to access part of my memory. Please try again later';
+     console.log(`Intent: ${handlerInput.requestEnvelope.request.intent.name}: message: ${error.message}`);
+   }
 
-        resolve(handlerInput.responseBuilder
-        .speak(outputSpeech)
-        .getResponse());
-      }).catch((error) => {
-        resolve(handlerInput.responseBuilder
-        .speak('I am really sorry. I am unable to access part of my memory. Please try again later')
-        .getResponse());
-      });
-    });
-  },
+    return handlerInput.responseBuilder
+    .speak(outputSpeech)
+    .getResponse();
+
+  }
 };
 
 const HelpIntent = {
@@ -150,7 +168,7 @@ const HelpIntent = {
   handle(handlerInput) {
     return handlerInput.responseBuilder
       .speak('This is pet match. I can help you find the perfect pet for you. You can say, I want a dog.')
-      .reprompt('Would you like a career or do you want to be a couch potato?')
+      .reprompt('What size and temperament are you looking for in a dog?')
       .getResponse();
   },
 };
@@ -357,6 +375,7 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
+    mythicalCreaturesHandler,
     InProgressPetMatchIntent,
     CompletedPetMatchIntent,
     HelpIntent,
