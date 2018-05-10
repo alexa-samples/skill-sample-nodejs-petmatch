@@ -45,9 +45,7 @@ const MythicalCreaturesHandler = {
         isMythicalCreatures = true;
       }
 
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'PetMatchIntent'
-      && isMythicalCreatures;
+    return isMythicalCreatures;
   },
   handle(handlerInput) {
     
