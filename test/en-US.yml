@@ -1,0 +1,34 @@
+#=====================================================================================================================
+#  ██████╗ ███████╗███████╗██████╗  ██████╗ ██╗  ██╗███████╗███╗   ██╗
+#  ██╔══██╗██╔════╝██╔════╝██╔══██╗██╔═══██╗██║ ██╔╝██╔════╝████╗  ██║
+#  ██████╔╝█████╗  ███████╗██████╔╝██║   ██║█████╔╝ █████╗  ██╔██╗ ██║
+#  ██╔══██╗██╔══╝  ╚════██║██╔═══╝ ██║   ██║██╔═██╗ ██╔══╝  ██║╚██╗██║
+#  ██████╔╝███████╗███████║██║     ╚██████╔╝██║  ██╗███████╗██║ ╚████║
+#  ╚═════╝ ╚══════╝╚══════╝╚═╝      ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝
+#
+# Test type: Functional/End-to-End/Regression
+# Skill name: "Pet Match" by Amazon
+# Test scope: LaunchRequest, PetMatchIntent, AMAZON.HelpIntent, AMAZON.StopIntent, AMAZON.CancelIntent
+#=====================================================================================================================
+
+---
+configuration:
+  locale:en-US
+
+---
+- test: "Sequence 01. Test scenario: launch request, no further interaction."
+- LaunchRequest:
+  - response.outputSpeech.ssml: "/welcome to pet match.*/i"
+  - response.reprompt.outputSpeech.ssml: "/what size and temperament are you looking for in a dog.*/i"
+  - response.shouldEndSession: "false"
+  - response.card: "undefined"
+
+---
+- test: "Sequence 02. Test scenario: Invoke PetMatchIntent with different utterances."
+- "ask pet match to find a pet":
+  - response.directives.updatedIntent.name: "PetMatchIntent"
+  - response.directives.updatedIntent.confirmationStatus: "NONE"
+  - response.outputSpeech.ssml: "/there are dogs that are tiny, small, medium, and large.*/i"
+  - response.outputSpeech.ssml: "/what size of a dog would you like.*/i"
+- "stop":
+  - response.outputSpeech.ssml: "/bye.*/i"
