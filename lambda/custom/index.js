@@ -3,6 +3,8 @@
 /* eslint-disable  no-loop-func */
 /* eslint-disable  consistent-return */
 /* eslint-disable  no-console */
+/* eslint-disable max-len */
+/* eslint-disable prefer-destructuring */
 
 const Alexa = require('ask-sdk-core');
 const https = require('https');
@@ -15,47 +17,47 @@ const LaunchRequestHandler = {
   },
   handle(handlerInput) {
     return handlerInput.responseBuilder
-      .speak('Welcome to pet match. I can help you find the best dog for you. '+
+      .speak('Welcome to pet match. I can help you find the best dog for you. ' +
         'What are two things you are looking for in a dog?')
       .reprompt('What size and temperament are you looking for in a dog?')
       .getResponse();
   },
 };
 
-const mythicalCreaturesHandler = {
+const MythicalCreaturesHandler = {
   canHandle(handlerInput) {
-    
+    if (handlerInput.requestEnvelope.request.type !== 'IntentRequest'
+      || handlerInput.requestEnvelope.request.intent.name !== 'PetMatchIntent') {
+      return false;
+    }
+
     let isMythicalCreatures = false;
-    if(handlerInput.requestEnvelope.request.intent.slots.pet
+    if (handlerInput.requestEnvelope.request.intent.slots.pet
       && handlerInput.requestEnvelope.request.intent.slots.pet.resolutions
       && handlerInput.requestEnvelope.request.intent.slots.pet.resolutions.resolutionsPerAuthority[0]
       && handlerInput.requestEnvelope.request.intent.slots.pet.resolutions.resolutionsPerAuthority[0].values
       && handlerInput.requestEnvelope.request.intent.slots.pet.resolutions.resolutionsPerAuthority[0].values[0]
       && handlerInput.requestEnvelope.request.intent.slots.pet.resolutions.resolutionsPerAuthority[0].values[0].value
       && handlerInput.requestEnvelope.request.intent.slots.pet.resolutions.resolutionsPerAuthority[0].values[0].value.name === 'mythical_creatures') {
-        const attributesManager = handlerInput.attributesManager;
-        const sessionAttributes = attributesManager.getSessionAttributes();
-        sessionAttributes.mythicalCreature = handlerInput.requestEnvelope.request.intent.slots.pet.value;
-        attributesManager.setSessionAttributes(sessionAttributes)
-        isMythicalCreatures = true;
-      }
+      const attributesManager = handlerInput.attributesManager;
+      const sessionAttributes = attributesManager.getSessionAttributes();
+      sessionAttributes.mythicalCreature = handlerInput.requestEnvelope.request.intent.slots.pet.value;
+      attributesManager.setSessionAttributes(sessionAttributes);
+      isMythicalCreatures = true;
+    }
 
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'PetMatchIntent'
-      && isMythicalCreatures;
+    return isMythicalCreatures;
   },
   handle(handlerInput) {
-    
     const attributesManager = handlerInput.attributesManager;
     const sessionAttributes = attributesManager.getSessionAttributes();
-    
+
     const outputSpeech = randomPhrase(slotsMeta.pet.invalid_responses).replace('{0}', sessionAttributes.mythicalCreature);
-    
+
     return handlerInput.responseBuilder
       .speak(outputSpeech)
       .getResponse();
-    
-  }
+  },
 };
 
 const InProgressPetMatchIntent = {
@@ -134,7 +136,7 @@ const CompletedPetMatchIntent = {
     try {
       const response = await httpGet(petMatchOptions);
 
-      if(response.result.length > 0) {
+      if (response.result.length > 0) {
         outputSpeech = `So a ${slotValues.size.resolved} 
           ${slotValues.temperament.resolved} 
           ${slotValues.energy.resolved} 
@@ -145,20 +147,34 @@ const CompletedPetMatchIntent = {
           for a ${slotValues.size.resolved} 
           ${slotValues.temperament.resolved} 
           ${slotValues.energy.resolved} dog`;
-      }      
-   } catch (error) {
-     outputSpeech = 'I am really sorry. I am unable to access part of my memory. Please try again later';
-     console.log(`Intent: ${handlerInput.requestEnvelope.request.intent.name}: message: ${error.message}`);
-   }
+      }
+    } catch (error) {
+      outputSpeech = 'I am really sorry. I am unable to access part of my memory. Please try again later';
+      console.log(`Intent: ${handlerInput.requestEnvelope.request.intent.name}: message: ${error.message}`);
+    }
 
     return handlerInput.responseBuilder
-    .speak(outputSpeech)
-    .getResponse();
-
-  }
+      .speak(outputSpeech)
+      .getResponse();
+  },
 };
 
-const HelpIntent = {
+const FallbackHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.FallbackIntent';
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+      .speak('I\'m sorry Pet Match can\'t help you with that. ' +
+        'I can help find the perfect dog for you. What are two things you\'re ' +
+        'looking for in a dog?')
+      .reprompt('What size and temperament are you looking for?')
+      .getResponse();
+  },
+};
+
+const HelpHandler = {
   canHandle(handlerInput) {
     const request = handlerInput.requestEnvelope.request;
 
@@ -199,13 +215,12 @@ const SessionEndedRequestHandler = {
   },
 };
 
-
 const ErrorHandler = {
   canHandle() {
     return true;
   },
   handle(handlerInput, error) {
-    console.log(`Error handled: ${error.message}`);
+    console.log(`Error handled: ${handlerInput.requestEnvelope.request.type} ${handlerInput.requestEnvelope.request.type === 'IntentRequest' ? `intent: ${handlerInput.requestEnvelope.request.intent.name} ` : ''}${error.message}.`);
 
     return handlerInput.responseBuilder
       .speak('Sorry, I can\'t understand the command. Please say again.')
@@ -219,13 +234,13 @@ const ErrorHandler = {
 
 const petMatchApi = {
   hostname: 'e4v7rdwl7l.execute-api.us-east-1.amazonaws.com',
-  pets: '/Test'
+  pets: '/Test',
 };
 
 const requiredSlots = [
   'energy',
   'size',
-  'temperament'
+  'temperament',
 ];
 
 const slotsMeta = {
@@ -233,9 +248,9 @@ const slotsMeta = {
     invalid_responses: [
       "I'm sorry, but I'm not qualified to match you with {0}s.",
       'Ah yes, {0}s are splendid creatures, but unfortunately owning one as a pet is outlawed.',
-      "I'm sorry I can't match you with {0}s."
+      "I'm sorry I can't match you with {0}s.",
     ],
-    error_default: "I'm sorry I can't match you with {0}s."
+    error_default: "I'm sorry I can't match you with {0}s.",
   },
 };
 
@@ -247,7 +262,7 @@ function buildPastMatchObject(response, slotValues) {
     pet: slotValues.pet.resolved,
     energy: slotValues.energy.resolved,
     size: slotValues.size.resolved,
-    temperament: slotValues.temperament.resolved
+    temperament: slotValues.temperament.resolved,
   };
 }
 
@@ -269,7 +284,7 @@ function getSlotValues(filledSlots) {
 
   console.log(`The filled slots: ${JSON.stringify(filledSlots)}`);
   Object.keys(filledSlots).forEach((item) => {
-    const name  = filledSlots[item].name;
+    const name = filledSlots[item].name;
 
     if (filledSlots[item] &&
       filledSlots[item].resolutions &&
@@ -281,14 +296,14 @@ function getSlotValues(filledSlots) {
           slotValues[name] = {
             synonym: filledSlots[item].value,
             resolved: filledSlots[item].resolutions.resolutionsPerAuthority[0].values[0].value.name,
-            isValidated: true
+            isValidated: true,
           };
           break;
         case 'ER_SUCCESS_NO_MATCH':
           slotValues[name] = {
             synonym: filledSlots[item].value,
             resolved: filledSlots[item].value,
-            isValidated: false
+            isValidated: false,
           };
           break;
         default:
@@ -298,7 +313,7 @@ function getSlotValues(filledSlots) {
       slotValues[name] = {
         synonym: filledSlots[item].value,
         resolved: filledSlots[item].value,
-        isValidated: false
+        isValidated: false,
       };
     }
   }, this);
@@ -331,7 +346,7 @@ function buildHttpGetOptions(host, path, port, params) {
     hostname: host,
     path: path + buildQueryString(params),
     port,
-    method: 'GET'
+    method: 'GET',
   };
 }
 
@@ -375,12 +390,13 @@ const skillBuilder = Alexa.SkillBuilders.custom();
 exports.handler = skillBuilder
   .addRequestHandlers(
     LaunchRequestHandler,
-    mythicalCreaturesHandler,
+    MythicalCreaturesHandler,
     InProgressPetMatchIntent,
     CompletedPetMatchIntent,
-    HelpIntent,
+    HelpHandler,
+    FallbackHandler,
     ExitHandler,
-    SessionEndedRequestHandler
+    SessionEndedRequestHandler,
   )
   .addErrorHandlers(ErrorHandler)
   .lambda();
