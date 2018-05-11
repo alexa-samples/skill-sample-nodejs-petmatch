@@ -168,7 +168,7 @@ const FallbackHandler = {
   },
   handle(handlerInput) {
     return handlerInput.responseBuilder
-      .speak("I'm sorry Pet Match Can't help you with that. " +
+      .speak("I'm sorry Pet Match can't help you with that. " +
         "I can help find the perfect dog for you. What are two things you're " +
         "looking for in a dog?")
       .reprompt("What size and temperament are you looking for?")
