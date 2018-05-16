@@ -11,24 +11,149 @@
 # Test scope: LaunchRequest, PetMatchIntent, AMAZON.HelpIntent, AMAZON.StopIntent, AMAZON.CancelIntent
 #=====================================================================================================================
 
+# TO BE COMPLETED:
+# ===============
+# I'm using interaction model starting with languageModel (WIP for interactionModel)
+# Multiple valid responses for prompt
+# Stop intent not working, it matches the PetMatchIntent, perhaps same when saying exit in fact skill
+
 ---
 configuration:
-  locale:en-US
+  locale: en-US
 
 ---
 - test: "Sequence 01. Test scenario: launch request, no further interaction."
 - LaunchRequest:
-  - response.outputSpeech.ssml: "/welcome to pet match.*/i"
-  - response.reprompt.outputSpeech.ssml: "/what size and temperament are you looking for in a dog.*/i"
-  - response.shouldEndSession: "false"
-  - response.card: "undefined"
+  - response.outputSpeech.ssml: /welcome to pet match.*/i
+  - response.reprompt.outputSpeech.ssml: /what size and temperament are you looking for in a dog.*/i
+  - response.shouldEndSession: false
+  - response.card: undefined
 
 ---
-- test: "Sequence 02. Test scenario: Invoke PetMatchIntent with different utterances."
+- test: "Sequence 02. Test scenario: Invoke PetMatchIntent with different utterances. Focus on dialog management."
 - "ask pet match to find a pet":
-  - response.directives.updatedIntent.name: "PetMatchIntent"
-  - response.directives.updatedIntent.confirmationStatus: "NONE"
-  - response.outputSpeech.ssml: "/there are dogs that are tiny, small, medium, and large.*/i"
-  - response.outputSpeech.ssml: "/what size of a dog would you like.*/i"
+  - prompt:
+    - /there are dogs that are tiny, small, medium, and large.*/i
+    - /what size of a dog would you like.*/i
 - "stop":
-  - response.outputSpeech.ssml: "/bye.*/i"
+  - prompt: "Bye"
+
+- "ask pet match to match me":
+  - prompt:
+    - /there are dogs that are tiny, small, medium, and large.*/i
+    - /what size of a dog would you like.*/i
+- stop: "Bye"
+
+- "ask pet match small dog":
+  - prompt:
+    - /would you prefer a dog to hang out with kids or to protect you.*/i
+    - /are you looking for more of a family dog or a guard dog.*/i
+  - slots.size.value: "small" # like this?
+  - slots: # or like this?
+    - pet: "dog"
+- stop: "Bye"
+
+- "ask pet match for a dog":
+  - prompt:
+    - /there are dogs that are tiny, small, medium, and large.*/i
+    - /what size of a dog would you like.*/i
+  - slots.pet.value: "dog" # Need verification
+- stop: "Bye"
+
+# It seems there are problems with the entity resolution for I_Want slot
+# should ask for size. It works repeating the utterance with "i want" or "i prefer"
+- "tell pet match i like a dog that is protective and that i can run with":
+  - prompt:
+    - /there are dogs that are tiny, small, medium, and large.*/i
+    - /what size of a dog would you like.*/i
+  - response.directives.updatedIntent.slots.I_Want.value: /i like.*/i
+  - response.directives.updatedIntent.slots.article.value: "a"
+  - response.directives.updatedIntent.slots.pet.value: "dog"
+  - response.directives.updatedIntent.slots.temperament.value: "protective"
+  - response.directives.updatedIntent.slots.energy.value: "that I can run with"
+- stop: "Bye"
+
+# not sure about the correct behaviour of the skill here, need review
+- "tell pet match i like a dog that is more than 20 kilograms": "*"
+- "ask pet match for a long hair large puppy": "*"
+- "ask pet match for a small hypoallergenic doggie": "*"
+- "tell pet match i want a canis that's over 70 inches tall": "*"
+
+# starting deeper interactions. Might want to add slot values for dialog manager?
+- "tell pet match i want to go hiking at the mountains":
+  - prompt:
+    - /there are dogs that are tiny, small, medium, and large.*/i
+    - /what size of a dog would you like.*/i
+- small:
+  - prompt:
+    - "are you looking for more of a family dog or a guard dog"
+    - "would you prefer a dog to hang out with kids or to protect you"
+- "guard dog": "so a small guard high energy dog sounds good for you consider a toy fox terrier"
+
+- "ask pet match for a lazy puppy":
+  - prompt:
+    - /there are dogs that are tiny, small, medium, and large.*/i
+    - /what size of a dog would you like.*/i
+- medium:
+  - prompt:
+    - "are you looking for more of a family dog or a guard dog"
+    - "would you prefer a dog to hang out with kids or to protect you"
+- "family dog": "so a medium family low energy dog sounds good for you consider a greyhound"
+
+- "tell pet match i want a hike canine":
+  - prompt:
+    - /there are dogs that are tiny, small, medium, and large.*/i
+    - /what size of a dog would you like.*/i
+  - large:
+  - prompt:
+    - "are you looking for more of a family dog or a guard dog"
+    - "would you prefer a dog to hang out with kids or to protect you"
+- "to protect me": "so a large guard high energy dog sounds good for you consider a doverman pinscher"
+
+- "tell pet match i want a good with kids dog that is lazy":
+  - prompt:
+    - /there are dogs that are tiny, small, medium, and large.*/i
+    - /what size of a dog would you like.*/i
+- small: /so a small family low energy dog sounds good for you consider a bolognese.*/i
+
+---
+- test: "Sequence 03. Test scenario: Focus on synonyms"
+- "tell pet match i prefer a doggie that is protective and energetic":
+  - prompt:
+    - /there are dogs that are tiny, small, medium, and large.*/i
+    - /what size of a dog would you like.*/i
+- yippi: "so a tiny guard high energy dog sounds good for you consider a chihuahua"
+
+- "tell pet match let's find a puppy that barks at people and fun to play with":
+  - prompt:
+    - /there are dogs that are tiny, small, medium, and large.*/i
+    - /what size of a dog would you like.*/i
+- little: "*" # not sure the skill is working properly here
+
+- "tell pet match my favorite is a canis that is adult and plays frisbee":
+  - prompt:
+    - /there are dogs that are tiny, small, medium, and large.*/i
+    - /what size of a dog would you like.*/i
+- "up to my knees": "i am sorry i could not find a match for a medium watch high dog"
+
+- "tell pet match i want a canine that is gentle with kids and to watch netflix with":
+  - prompt:
+    - /there are dogs that are tiny, small, medium, and large.*/i
+    - /what size of a dog would you like.*/i
+- gigantic: "so a large family low energy dog sounds good for you consider a great dane"
+
+---
+- test: "Sequence 04. Test scenario: Focus on entity resolution"
+- "tell pet match i want a good with kids dog that is lazy":
+  - prompt:
+    - /there are dogs that are tiny, small, medium, and large.*/i
+    - /what size of a dog would you like.*/i
+- mini: "which would you like small or tiny"
+- "small": "so a small family low energy dog sounds good for you consider a bolognese"
+
+- "tell pet match i want a good with kids dog that is lazy":
+  - prompt:
+    - /there are dogs that are tiny, small, medium, and large.*/i
+    - /what size of a dog would you like.*/i
+- mini: "which would you like small or tiny"
+- "tiny": "i am sorry i could not find a match for a tiny family low dog"
