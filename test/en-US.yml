@@ -14,8 +14,7 @@
 # TO BE COMPLETED:
 # ===============
 # I'm using interaction model starting with languageModel (WIP for interactionModel)
-# Multiple valid responses for prompt
-# Stop intent not working, it matches the PetMatchIntent, perhaps same when saying exit in fact skill
+# Stop, help, cancel intents not working, it matches the PetMatchIntent, perhaps same when saying exit in fact skill
 
 ---
 configuration:
@@ -46,18 +45,19 @@ configuration:
 
 - "ask pet match small dog":
   - prompt:
-    - /would you prefer a dog to hang out with kids or to protect you.*/i
-    - /are you looking for more of a family dog or a guard dog.*/i
-  - slots.size.value: "small" # like this?
-  - slots: # or like this?
+    - /there are dogs that are tiny, small, medium, and large.*/i
+    - /what size of a dog would you like.*/i
+  - slots:
     - pet: "dog"
+    - size: "small"
 - stop: "Bye"
 
 - "ask pet match for a dog":
   - prompt:
     - /there are dogs that are tiny, small, medium, and large.*/i
     - /what size of a dog would you like.*/i
-  - slots.pet.value: "dog" # Need verification
+  - slots:
+    - pet: "dog"
 - stop: "Bye"
 
 # It seems there are problems with the entity resolution for I_Want slot
@@ -66,11 +66,12 @@ configuration:
   - prompt:
     - /there are dogs that are tiny, small, medium, and large.*/i
     - /what size of a dog would you like.*/i
-  - response.directives.updatedIntent.slots.I_Want.value: /i like.*/i
-  - response.directives.updatedIntent.slots.article.value: "a"
-  - response.directives.updatedIntent.slots.pet.value: "dog"
-  - response.directives.updatedIntent.slots.temperament.value: "protective"
-  - response.directives.updatedIntent.slots.energy.value: "that I can run with"
+  - slots:
+    - pet: "dog"
+    - article: "a"
+    - I_Want: /i like.*/i
+    - temperament: "protective"
+    - energy: "that I can run with"
 - stop: "Bye"
 
 # not sure about the correct behaviour of the skill here, need review
@@ -104,7 +105,7 @@ configuration:
   - prompt:
     - /there are dogs that are tiny, small, medium, and large.*/i
     - /what size of a dog would you like.*/i
-  - large:
+- large:
   - prompt:
     - "are you looking for more of a family dog or a guard dog"
     - "would you prefer a dog to hang out with kids or to protect you"
@@ -157,3 +158,23 @@ configuration:
     - /what size of a dog would you like.*/i
 - mini: "which would you like small or tiny"
 - "tiny": "i am sorry i could not find a match for a tiny family low dog"
+
+---
+- test: "Sequence 05. Test scenario: AMAZON.HelpIntent. Ask for help and exit"
+- LaunchRequest:
+- help:
+  - response.outputSpeech.ssml: /.*i can help you find the perfect pet for you you can say i want a dog.*/i
+  - response.reprompt.outputSpeech.ssml: /would you like a career or do you want to be a couch potato.*/i
+  - response.shouldEndSession: false
+  - response.card: undefined
+- stop: "Bye"
+
+---
+- test: "Sequence 06. Test scenario: AMAZON.StopIntent and AMAZON.CancelIntent"
+- LaunchRequest:
+- stop:
+  - response.outputSpeech.ssml: "Bye"
+
+- LaunchRequest:
+- cancel:
+  - response.outputSpeech.ssml: "Bye"
