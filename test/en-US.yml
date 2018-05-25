@@ -36,7 +36,7 @@ configuration:
   - prompt:
     - /there are dogs that are tiny, small, medium, and large.*/i
     - /what size of a dog would you like.*/i
-- "stop":
+- stop:
   - prompt: "Bye"
 
 ---
@@ -45,14 +45,14 @@ configuration:
   - prompt:
     - /there are dogs that are tiny, small, medium, and large.*/i
     - /what size of a dog would you like.*/i
-- stop: "Bye"
+- stop: "Bye" # same behavior as previous sequence stop
 
 ---
 - test: "Sequence 02-03. Test scenario: {size} and {pet} slot values provided on the utterance."
 - "ask pet match small dog":
   - prompt:
-    - /there are dogs that are tiny, small, medium, and large.*/i
-    - /what size of a dog would you like.*/i
+    - /would you prefer a dog to hang out with kids or to protect you.*/i
+    - /are you looking for more of a family dog or a guard dog?.*/i
   - slots:
     - pet: "dog"
     - size: "small"
@@ -84,158 +84,158 @@ configuration:
     - energy: "that I can run with"
 - stop: "Bye"
 
-# not sure about the correct behaviour of the skill here, need review
----
-- test: "Sequence 02-06. Test scenario: {I_Want}, {article}, {pet}, {comparison}, {amount} and {units} provided."
-- "tell pet match i like a dog that is more than 20 kilograms": "*"
-
----
-- test: "Sequence 02-07. Test scenario: {article}, {shedding}, {size} and {pet} slot values provided."
-- "ask pet match for a long hair large puppy": "*"
-
----
-- test: "Sequence 02-08. Test scenario: {article}, {size}, {shedding} and {pet} slot values provided."
-- "ask pet match for a small hypoallergenic doggie": "*"
-
----
-- test: "Sequence 02-09. Test scenario: {I_Want}, {article}, {pet}, {comparison}, {amount} and {units} provided."
-- "tell pet match i want a canis that's over 70 inches tall": "*"
-
-# starting deeper interactions. Might want to add slot values for dialog manager?
----
-- test: "Sequence 02-10. Test scenario: {I_Want}, {energy}, {at_the} and {location} slot values provided."
-- "tell pet match i prefer to go hiking at the mountains":
-  - prompt:
-    - /there are dogs that are tiny, small, medium, and large.*/i
-    - /what size of a dog would you like.*/i
-- small:
-  - prompt:
-    - "are you looking for more of a family dog or a guard dog"
-    - "would you prefer a dog to hang out with kids or to protect you"
-- "guard dog":
-  - prompt: "so a small guard high energy dog sounds good for you consider a toy fox terrier"
-  - slots:
-    - at_the: "at the"
-    - pet: "dog"
-    - size: "small"
-    - I_Want: /i prefer.*/i
-    - temperament: "guard"
-    - energy: "go hiking"
-    - location: "mountains"
-
----
-- test: "Sequence 02-11. Test scenario: {energy} and {pet} slot values provided."
-- "ask pet match for a lazy puppy":
-  - prompt:
-    - /there are dogs that are tiny, small, medium, and large.*/i
-    - /what size of a dog would you like.*/i
-- medium:
-  - prompt:
-    - "are you looking for more of a family dog or a guard dog"
-    - "would you prefer a dog to hang out with kids or to protect you"
-- "family dog": "so a medium family low energy dog sounds good for you consider a greyhound"
-
----
-- test: "Sequence 02-12. Test scenario: {I_Want}, {article}, {energy} and {pet} slot values provided."
-- "tell pet match i want a hike canine":
-  - intent: "PetMatchIntent"
-  - slots:
-    - I_Want: "i want"
-    - article: "a"
-    - energy: "hike"
-    - pet: "canine"
-  - prompt:
-    - /there are dogs that are tiny, small, medium, and large.*/i
-    - /what size of a dog would you like.*/i
-- large:
-  - prompt:
-    - "are you looking for more of a family dog or a guard dog"
-    - "would you prefer a dog to hang out with kids or to protect you"
-- "to protect me": "so a large guard high energy dog sounds good for you consider a doverman pinscher"
-
----
-- test: "Sequence 02-13. Test scenario: {I_Want}, {article}, {temperament} and {energy} slot values provided."
-- "tell pet match i want a good with kids dog that is lazy":
-  - prompt:
-    - /there are dogs that are tiny, small, medium, and large.*/i
-    - /what size of a dog would you like.*/i
-- small: /so a small family low energy dog sounds good for you consider a bolognese.*/i
-
-
-# Sequence 03. Test scenario: Focus on synonyms
----
-- test: "Sequence 03-01. Test scenario: Doggie and yippi."
-- "tell pet match i prefer a doggie that is protective and energetic":
-  - prompt:
-    - /there are dogs that are tiny, small, medium, and large.*/i
-    - /what size of a dog would you like.*/i
-- yippi: "so a tiny guard high energy dog sounds good for you consider a chihuahua"
-
----
-- test: "Sequence 03-02. Test scenario: Puppy and little."
-- "tell pet match let's find a puppy that barks at people and fun to play with":
-  - prompt:
-    - /there are dogs that are tiny, small, medium, and large.*/i
-    - /what size of a dog would you like.*/i
-- little: "*" # not sure the skill is working properly here
-
----
-- test: "Sequence 03-03. Test scenario: Canis and 'up to my knees'."
-- "tell pet match my favorite is a canis that is adult and plays frisbee":
-  - prompt:
-    - /there are dogs that are tiny, small, medium, and large.*/i
-    - /what size of a dog would you like.*/i
-- "up to my knees": "i am sorry i could not find a match for a medium watch high dog"
-
----
-- test: "Sequence 03-04. Test scenario: Canine and gigantic."
-- "tell pet match i want a canine that is gentle with kids and to watch netflix with":
-  - prompt:
-    - /there are dogs that are tiny, small, medium, and large.*/i
-    - /what size of a dog would you like.*/i
-- gigantic: "so a large family low energy dog sounds good for you consider a great dane"
-
-
-# Sequence 04. Test scenario: Focus on entity resolution
----
-- test: "Sequence 04-01. Test scenario: Mini for small."
-- "tell pet match i want a good with kids dog that is lazy":
-  - prompt:
-    - /there are dogs that are tiny, small, medium, and large.*/i
-    - /what size of a dog would you like.*/i
-- mini: "which would you like small or tiny"
-- "small": "so a small family low energy dog sounds good for you consider a bolognese"
-
----
-- test: "Sequence 04-02. Test scenario: Mini for tiny."
-- "tell pet match i want a good with kids dog that is lazy":
-  - prompt:
-    - /there are dogs that are tiny, small, medium, and large.*/i
-    - /what size of a dog would you like.*/i
-- mini: "which would you like small or tiny"
-- "tiny": "i am sorry i could not find a match for a tiny family low dog"
-
-
----
-- test: "Sequence 05. Test scenario: AMAZON.HelpIntent. Ask for help and exit"
-- LaunchRequest:
-- help:
-  - response.outputSpeech.ssml: /.*i can help you find the perfect pet for you you can say i want a dog.*/i
-  - response.reprompt.outputSpeech.ssml: /would you like a career or do you want to be a couch potato.*/i
-  - response.shouldEndSession: false
-  - response.card: undefined
-- stop: "Bye"
-
-
-# Sequence 06. Test scenario: AMAZON.StopIntent and AMAZON.CancelIntent
----
-- test: "Sequence 06-01: AMAZON.StopIntent"
-- LaunchRequest:
-- stop:
-  - response.outputSpeech.ssml: "Bye"
-
----
-- test: "Sequence 06-02: AMAZON.CancelIntent"
-- LaunchRequest:
-- cancel:
-  - response.outputSpeech.ssml: "Bye"
+## not sure about the correct behaviour of the skill here, need review
+#---
+#- test: "Sequence 02-06. Test scenario: {I_Want}, {article}, {pet}, {comparison}, {amount} and {units} provided."
+#- "tell pet match i like a dog that is more than 20 kilograms": "*"
+#
+#---
+#- test: "Sequence 02-07. Test scenario: {article}, {shedding}, {size} and {pet} slot values provided."
+#- "ask pet match for a long hair large puppy": "*"
+#
+#---
+#- test: "Sequence 02-08. Test scenario: {article}, {size}, {shedding} and {pet} slot values provided."
+#- "ask pet match for a small hypoallergenic doggie": "*"
+#
+#---
+#- test: "Sequence 02-09. Test scenario: {I_Want}, {article}, {pet}, {comparison}, {amount} and {units} provided."
+#- "tell pet match i want a canis that's over 70 inches tall": "*"
+#
+## starting deeper interactions. Might want to add slot values for dialog manager?
+#---
+#- test: "Sequence 02-10. Test scenario: {I_Want}, {energy}, {at_the} and {location} slot values provided."
+#- "tell pet match i prefer to go hiking at the mountains":
+#  - prompt:
+#    - /there are dogs that are tiny, small, medium, and large.*/i
+#    - /what size of a dog would you like.*/i
+#- small:
+#  - prompt:
+#    - "are you looking for more of a family dog or a guard dog"
+#    - "would you prefer a dog to hang out with kids or to protect you"
+#- "guard dog":
+#  - prompt: "so a small guard high energy dog sounds good for you consider a toy fox terrier"
+#  - slots:
+#    - at_the: "at the"
+#    - pet: "dog"
+#    - size: "small"
+#    - I_Want: /i prefer.*/i
+#    - temperament: "guard"
+#    - energy: "go hiking"
+#    - location: "mountains"
+#
+#---
+#- test: "Sequence 02-11. Test scenario: {energy} and {pet} slot values provided."
+#- "ask pet match for a lazy puppy":
+#  - prompt:
+#    - /there are dogs that are tiny, small, medium, and large.*/i
+#    - /what size of a dog would you like.*/i
+#- medium:
+#  - prompt:
+#    - "are you looking for more of a family dog or a guard dog"
+#    - "would you prefer a dog to hang out with kids or to protect you"
+#- "family dog": "so a medium family low energy dog sounds good for you consider a greyhound"
+#
+##---
+##- test: "Sequence 02-12. Test scenario: {I_Want}, {article}, {energy} and {pet} slot values provided."
+##- "tell pet match i want a hike canine":
+##  - intent: "PetMatchIntent"
+##  - slots:
+##    - I_Want: "i want"
+##    - article: "a"
+##    - energy: "hike"
+##    - pet: "canine"
+##  - prompt:
+##    - /there are dogs that are tiny, small, medium, and large.*/i
+##    - /what size of a dog would you like.*/i
+##- large:
+##  - prompt:
+##    - "are you looking for more of a family dog or a guard dog"
+##    - "would you prefer a dog to hang out with kids or to protect you"
+##- "to protect me": "so a large guard high energy dog sounds good for you consider a doverman pinscher"
+#
+#---
+#- test: "Sequence 02-13. Test scenario: {I_Want}, {article}, {temperament} and {energy} slot values provided."
+#- "tell pet match i want a good with kids dog that is lazy":
+#  - prompt:
+#    - /there are dogs that are tiny, small, medium, and large.*/i
+#    - /what size of a dog would you like.*/i
+#- small: /so a small family low energy dog sounds good for you consider a bolognese.*/i
+#
+#
+## Sequence 03. Test scenario: Focus on synonyms
+#---
+#- test: "Sequence 03-01. Test scenario: Doggie and yippi."
+#- "tell pet match i prefer a doggie that is protective and energetic":
+#  - prompt:
+#    - /there are dogs that are tiny, small, medium, and large.*/i
+#    - /what size of a dog would you like.*/i
+#- yippi: "so a tiny guard high energy dog sounds good for you consider a chihuahua"
+#
+#---
+#- test: "Sequence 03-02. Test scenario: Puppy and little."
+#- "tell pet match let's find a puppy that barks at people and fun to play with":
+#  - prompt:
+#    - /there are dogs that are tiny, small, medium, and large.*/i
+#    - /what size of a dog would you like.*/i
+#- little: "*" # not sure the skill is working properly here
+#
+#---
+#- test: "Sequence 03-03. Test scenario: Canis and 'up to my knees'."
+#- "tell pet match my favorite is a canis that is adult and plays frisbee":
+#  - prompt:
+#    - /there are dogs that are tiny, small, medium, and large.*/i
+#    - /what size of a dog would you like.*/i
+#- "up to my knees": "i am sorry i could not find a match for a medium watch high dog"
+#
+#---
+#- test: "Sequence 03-04. Test scenario: Canine and gigantic."
+#- "tell pet match i want a canine that is gentle with kids and to watch netflix with":
+#  - prompt:
+#    - /there are dogs that are tiny, small, medium, and large.*/i
+#    - /what size of a dog would you like.*/i
+#- gigantic: "so a large family low energy dog sounds good for you consider a great dane"
+#
+#
+## Sequence 04. Test scenario: Focus on entity resolution
+#---
+#- test: "Sequence 04-01. Test scenario: Mini for small."
+#- "tell pet match i want a good with kids dog that is lazy":
+#  - prompt:
+#    - /there are dogs that are tiny, small, medium, and large.*/i
+#    - /what size of a dog would you like.*/i
+#- mini: "which would you like small or tiny"
+#- small: "so a small family low energy dog sounds good for you consider a bolognese"
+#
+#---
+#- test: "Sequence 04-02. Test scenario: Mini for tiny."
+#- "tell pet match i want a good with kids dog that is lazy":
+#  - prompt:
+#    - /there are dogs that are tiny, small, medium, and large.*/i
+#    - /what size of a dog would you like.*/i
+#- mini: "which would you like small or tiny"
+#- tiny: "i am sorry i could not find a match for a tiny family low dog"
+#
+#
+#---
+#- test: "Sequence 05. Test scenario: AMAZON.HelpIntent. Ask for help and exit"
+#- LaunchRequest:
+#- help:
+#  - response.outputSpeech.ssml: /.*i can help you find the perfect pet for you you can say i want a dog.*/i
+#  - response.reprompt.outputSpeech.ssml: /would you like a career or do you want to be a couch potato.*/i
+#  - response.shouldEndSession: false
+#  - response.card: undefined
+#- stop: "Bye"
+#
+#
+## Sequence 06. Test scenario: AMAZON.StopIntent and AMAZON.CancelIntent
+#---
+#- test: "Sequence 06-01: AMAZON.StopIntent"
+#- LaunchRequest:
+#- stop:
+#  - response.outputSpeech.ssml: "Bye"
+#
+#---
+#- test: "Sequence 06-02: AMAZON.CancelIntent"
+#- LaunchRequest:
+#- cancel:
+#  - response.outputSpeech.ssml: "Bye"
