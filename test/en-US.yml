@@ -5,19 +5,16 @@
 #  /___/_/\_\/_/_/_/   /_/  \__/___/\__/_/_//_/\_, /
 #                                             /___/
 #
-# Test type: Functional/End-to-End/Regression
+# Created by Bespoken
+# Learn more at https://read.bespoken.io/unit-testing/getting-started/
+#
 # Skill name: "Pet Match" by Amazon
 # Test scope: LaunchRequest, PetMatchIntent, AMAZON.HelpIntent, AMAZON.StopIntent, AMAZON.CancelIntent
+# Description: General test suite for all intents
 #=====================================================================================================================
-
-# TO BE COMPLETED:
-# ===============
-# I'm using interaction model starting with languageModel (WIP for interactionModel)
-# Stop, help, cancel intents not working, it matches the PetMatchIntent, perhaps same when saying exit in fact skill
 
 ---
 configuration:
-  accessToken: 123456
   locale: en-US
 
 ---
