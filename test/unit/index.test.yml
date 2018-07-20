@@ -19,82 +19,54 @@ configuration:
 
 ---
 - test: Launch request, no further interaction
-- open pet match:
+- LaunchRequest:
   - prompt: Welcome to pet match
   - reprompt: What size and temperament are you looking for in a dog
   - sessionEnded: false
 
 ---
 - test: Simple utterance, no slot value provided
-- find a pet:
+- PetMatchIntent:
   - prompt:
     - There are dogs that are tiny, small, medium, and large
     - What size of a dog would you like?
-- stop: Bye
+- AMAZON.StopIntent: Bye
 
 ---
 - test: The size and pet slot values are provided on open
-- small dog:
-  - intent: PetMatchIntent
-    size: small
-    pet: dog
+- PetMatchIntent size=small pet=dog:
   - prompt:
     - Would you prefer a dog to hang out with kids or to protect you?
     - Are you looking for more of a family dog or a guard dog?
-- stop: Bye
+- AMAZON.StopIntent: Bye
 
 ---
 - test: Complete dialog sequence, starting with energy
-- high energy:
-  - intent: PetMatchIntent
-    energy: high
+- PetMatchIntent pet=dog energy=high:
   - prompt:
     - There are dogs that are tiny, small, medium, and large
     - What size of a dog would you like?
-- small: Are you looking for more of a family dog or a guard dog?
-- guard: So a small guard high energy dog sounds good for you. Consider a toy fox terrier
-- exit
+- PetMatchIntent size=small: Are you looking for more of a family dog or a guard dog?
+- PetMatchIntent temperament=guard: So a small guard high energy dog sounds good for you. Consider a toy fox terrier
+- SessionEndedRequest:
+  - response.outputSpeech: undefined
 
 ---
 - test: Disambiguation of slots
-- open pet match
-- mini:
-  - intent: PetMatchIntent
-    size: mini
-  - prompt: Which would you like   small  or tiny?
-- small:
-  - intent: PetMatchIntent
-    size: small
-  - prompt: Are you looking for more of a family dog or a guard dog?
-- guard:
-  - intent: PetMatchIntent
-    temperament: guard
-  - prompt: Do you prefer high energy or low energy dogs?
-- low:
-  - intent: PetMatchIntent
-    energy: low
-  - prompt: So a small guard low energy dog sounds good for you. Consider a miniature snouser
+- LaunchRequest
+- PetMatchIntent size=mini: Which would you like   small  or tiny?
+- PetMatchIntent size=small: Are you looking for more of a family dog or a guard dog?
+- PetMatchIntent temperament=guard: Do you prefer high energy or low energy dogs?
+- PetMatchIntent energy=low: So a small guard low energy dog sounds good for you. Consider a miniature snouser
 
 ---
 - test: Disambiguation of slots - different order
-- open pet match
-- guard:
-  - intent: PetMatchIntent
-    temperament: guard
-  - prompt: There are dogs that are tiny, small, medium, and large. Which would you like?
-- mini:
-  - intent: PetMatchIntent
-    size: mini
-  - prompt: Do you prefer high energy or low energy dogs?
-- low:
-  - intent: PetMatchIntent
-    energy: low
-  - prompt: So a small guard low energy dog sounds good for you. Consider a miniature snouser
+- LaunchRequest
+- PetMatchIntent temperament=guard: There are dogs that are tiny, small, medium, and large. Which would you like?
+- PetMatchIntent size=mini: Do you prefer high energy or low energy dogs?
+- PetMatchIntent energy=low: So a small guard low energy dog sounds good for you. Consider a miniature snouser
 
 ---
 - test: No matching slots
-- open pet match
-- dummy:
-  - intent: PetMatchIntent
-    size: dummy
-  - prompt: What size are you looking for
+- LaunchRequest
+- PetMatchIntent size=dummy: What size are you looking for
