@@ -47,24 +47,17 @@ configuration:
     - There are dogs that are tiny, small, medium, and large
     - What size of a dog would you like?
 - PetMatchIntent size=small: Are you looking for more of a family dog or a guard dog?
-- PetMatchIntent temperament=guard: So a small guard high energy dog sounds good for you. Consider a toy fox terrier
+- PetMatchIntent temperament=guard: So a small \n          guard \n          high \n          energy dog sounds good for you. Consider a \n          toy fox terrier
 - SessionEndedRequest:
   - response.outputSpeech: undefined
 
 ---
 - test: Disambiguation of slots
 - LaunchRequest
-- PetMatchIntent size=mini: Which would you like   small  or tiny?
+- PetMatchIntent size=mini: What size are you looking for
 - PetMatchIntent size=small: Are you looking for more of a family dog or a guard dog?
 - PetMatchIntent temperament=guard: Do you prefer high energy or low energy dogs?
-- PetMatchIntent energy=low: So a small guard low energy dog sounds good for you. Consider a miniature snouser
-
----
-- test: Disambiguation of slots - different order
-- LaunchRequest
-- PetMatchIntent temperament=guard: There are dogs that are tiny, small, medium, and large. Which would you like?
-- PetMatchIntent size=mini: Do you prefer high energy or low energy dogs?
-- PetMatchIntent energy=low: So a small guard low energy dog sounds good for you. Consider a miniature snouser
+- PetMatchIntent energy=low: So a small \n          guard \n          low \n          energy dog sounds good for you. Consider a \n          miniature snouser
 
 ---
 - test: No matching slots

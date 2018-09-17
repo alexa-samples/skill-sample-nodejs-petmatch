@@ -2,7 +2,7 @@
   "handler": "../../lambda/custom/index.js",
   "trace": false,
   "jest": {
-    "silent": false,
+    "silent": true,
     "coveragePathIgnorePatterns": [
       "<rootDir>/analytics"
     ]
