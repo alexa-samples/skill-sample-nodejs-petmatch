@@ -20,6 +20,12 @@ const LaunchRequestHandler = {
       .speak('Welcome to pet match. I can help you find the best dog for you. ' +
         'What are two things you are looking for in a dog?')
       .reprompt('What size and temperament are you looking for in a dog?')
+      .addDirective({
+          type : 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document: require('./homepage.json'),
+          datasources: {}
+      })
       .getResponse();
   },
 };
@@ -104,6 +110,24 @@ const InProgressPetMatchIntent = {
                 .speak(prompt)
                 .reprompt(prompt)
                 .addElicitSlotDirective(currentSlot.name)
+                .addDirective({
+                    type : 'Alexa.Presentation.APL.RenderDocument',
+                    token: 'dialogManagementPagerDoc',
+                    version: '1.0',
+                    document: require('./dialogmanagement.json'),
+                    datasources: {}
+                })         
+                .addDirective({
+                  type: 'Alexa.Presentation.APL.ExecuteCommands',
+                  token: 'dialogManagementPagerDoc',
+                  commands: [
+                    {
+                      type: 'AutoPage',
+                      componentId: 'pagerComponent',
+                      duration: 5000
+                    }
+                  ]
+                })
                 .getResponse();
             }
           }
@@ -132,6 +156,7 @@ const CompletedPetMatchIntent = {
     const petMatchOptions = buildPetMatchOptions(slotValues);
 
     let outputSpeech = '';
+    let errorMessage = ''
 
     try {
       const response = await httpGet(petMatchOptions);
@@ -147,13 +172,32 @@ const CompletedPetMatchIntent = {
           for a ${slotValues.size.resolved} 
           ${slotValues.temperament.resolved} 
           ${slotValues.energy.resolved} dog`;
+        errorMessage = outputSpeech;
       }
     } catch (error) {
       outputSpeech = 'I am really sorry. I am unable to access part of my memory. Please try again later';
+      errorMessage = outputSpeech;
       console.log(`Intent: ${handlerInput.requestEnvelope.request.intent.name}: message: ${error.message}`);
     }
 
     return handlerInput.responseBuilder
+      .addDirective({
+          type : 'Alexa.Presentation.APL.RenderDocument',
+          version: '1.0',
+          document: require('./results.json'),
+          datasources: {
+            "petMatchData": {
+                "type": "object",
+                "properties": {
+                    "dog": response.result[0].breed,
+                    "size": slotValues.size.resolved,
+                    "temperament": slotValues.temperament.resolved,
+                    "energy": slotValues.energy.resolved,
+                    "error": errorMessage
+                }
+            }
+          }
+      })
       .speak(outputSpeech)
       .getResponse();
   },
