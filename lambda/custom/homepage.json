@@ -1,0 +1,282 @@
+{
+    "type": "APL",
+    "version": "1.0",
+    "import": [
+        {
+            "name": "alexa-viewport-profiles",
+            "version": "1.0.0"
+        }
+    ],
+    "resources": [
+        {
+            "description": "Colors",
+            "colors": {
+                "myBlue": "#3AA6F8",
+                "myRed": "#F11C31",
+                "myDarkRed": "#C41627",
+                "myWhite": "#FFFFFF",
+                "myDarkWhite": "#EEEEEE",
+                "myYellow": "#FEC92E",
+                "myOrange": "#F7A031"
+            }
+        }
+    ],
+    "styles": {},
+    "layouts": {
+        "Canopy": {
+            "parameters": [],
+            "items": {
+                "type": "Container",
+                "direction": "column",
+                "width": "100vw",
+                "height": "40vh",
+                "items": [
+                    {
+                        "description": "Canopy top",
+                        "type": "Container",
+                        "direction": "row",
+                        "width": "100vw",
+                        "height": "30vh",
+                        "items": [
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "30vh",
+                                "backgroundColor": "@myRed"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "30vh",
+                                "backgroundColor": "@myWhite"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "30vh",
+                                "backgroundColor": "@myRed"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "30vh",
+                                "backgroundColor": "@myWhite"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "30vh",
+                                "backgroundColor": "@myRed"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "30vh",
+                                "backgroundColor": "@myWhite"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "30vh",
+                                "backgroundColor": "@myRed"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "30vh",
+                                "backgroundColor": "@myWhite"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "30vh",
+                                "backgroundColor": "@myRed"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "30vh",
+                                "backgroundColor": "@myWhite"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "30vh",
+                                "backgroundColor": "@myRed"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "30vh",
+                                "backgroundColor": "@myWhite"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "30vh",
+                                "backgroundColor": "@myRed"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Canopy bottom",
+                        "type": "Container",
+                        "direction": "row",
+                        "width": "100vw",
+                        "height": "10vh",
+                        "items": [
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "10vh",
+                                "borderBottomLeftRadius": "3vw",
+                                "borderBottomRightRadius": "3vw",
+                                "backgroundColor": "@myDarkRed"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "10vh",
+                                "borderBottomLeftRadius": "3vw",
+                                "borderBottomRightRadius": "3vw",
+                                "backgroundColor": "@myDarkWhite"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "10vh",
+                                "borderBottomLeftRadius": "3vw",
+                                "borderBottomRightRadius": "3vw",
+                                "backgroundColor": "@myDarkRed"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "10vh",
+                                "borderBottomLeftRadius": "3vw",
+                                "borderBottomRightRadius": "3vw",
+                                "backgroundColor": "@myDarkWhite"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "10vh",
+                                "borderBottomLeftRadius": "3vw",
+                                "borderBottomRightRadius": "3vw",
+                                "backgroundColor": "@myDarkRed"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "10vh",
+                                "borderBottomLeftRadius": "3vw",
+                                "borderBottomRightRadius": "3vw",
+                                "backgroundColor": "@myDarkWhite"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "10vh",
+                                "borderBottomLeftRadius": "3vw",
+                                "borderBottomRightRadius": "3vw",
+                                "backgroundColor": "@myDarkRed"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "10vh",
+                                "borderBottomLeftRadius": "3vw",
+                                "borderBottomRightRadius": "3vw",
+                                "backgroundColor": "@myDarkWhite"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "10vh",
+                                "borderBottomLeftRadius": "3vw",
+                                "borderBottomRightRadius": "3vw",
+                                "backgroundColor": "@myDarkRed"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "10vh",
+                                "borderBottomLeftRadius": "3vw",
+                                "borderBottomRightRadius": "3vw",
+                                "backgroundColor": "@myDarkWhite"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "10vh",
+                                "borderBottomLeftRadius": "3vw",
+                                "borderBottomRightRadius": "3vw",
+                                "backgroundColor": "@myDarkRed"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "10vh",
+                                "borderBottomLeftRadius": "3vw",
+                                "borderBottomRightRadius": "3vw",
+                                "backgroundColor": "@myDarkWhite"
+                            },
+                            {
+                                "type": "Frame",
+                                "width": "8vw",
+                                "height": "10vh",
+                                "borderBottomLeftRadius": "3vw",
+                                "borderBottomRightRadius": "3vw",
+                                "backgroundColor": "@myDarkRed"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "mainTemplate": {
+        "items": [
+            {
+                "type": "Container",
+                "direction": "column",
+                "width": "100vw",
+                "height": "100vh",
+                "items": [
+                    {
+                        "type": "Frame",
+                        "width": "100vw",
+                        "height": "100vh",
+                        "position": "absolute",
+                        "backgroundColor": "@myBlue"
+                    },
+                    {
+                        "type": "Canopy"
+                    },
+                    {
+                        "type": "Container",
+                        "direction": "column",
+                        "width": "100vw",
+                        "height": "60vh",
+                        "alignItems": "center",
+                        "items": [
+                            {
+                                "type": "Text",
+                                "text": "Pet Match",
+                                "fontSize": "10vw",
+                                "fontWeight": 700,
+                                "color": "@myYellow",
+                                "paddingTop": "8vh"
+                            },
+                            {
+                                "type": "Text",
+                                "text": "What are two things you are looking for in a dog?",
+                                "fontSize": "4vw"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
