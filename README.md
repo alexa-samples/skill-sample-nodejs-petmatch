@@ -1,6 +1,11 @@
 #  Build An Alexa Pet Match Skill 🇺🇸
 <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/header._TTH_.png" />
 
+
+**NOTE:** This project uses Dialog Management. If you're looking for **Pet Match** with
+[Alexa Conversations](https://developer.amazon.com/en-US/docs/alexa/conversations/about-alexa-conversations.html) Please see: [skill-sample-nodejs-alexa-conversations-pet-match](https://github.com/alexa/skill-sample-nodejs-alexa-conversations-pet-match). Learn 
+Alexa Conversations with [Tutorial: Build Multi-turn Skills with Alexa Conversations](https://developer.amazon.com/en-US/alexa/alexa-skills-kit/get-deeper/tutorials-code-samples/build-multi-turn-skills-with-alexa-conversations).
+
 ## Overview
 
 In this workshop you will create a skill called Pet Match that matches the user
