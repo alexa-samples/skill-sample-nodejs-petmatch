@@ -1,3 +1,6 @@
+# No Webstorm files
+/.idea
+
 # Logs
 logs
 *.log
@@ -57,5 +60,7 @@ typings/
 # dotenv environment variables file
 .env
 
+# IDEs
+.idea
 
 .DS_Store

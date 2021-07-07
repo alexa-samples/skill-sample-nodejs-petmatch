@@ -1,0 +1,65 @@
+#=====================================================================================================================
+#     ______    _ ____  ______        __  _
+#    / __/ /__ (_) / / /_  __/__ ___ / /_(_)__  ___ _
+#   _\ \/  '_// / / /   / / / -_|_-</ __/ / _ \/ _ `/
+#  /___/_/\_\/_/_/_/   /_/  \__/___/\__/_/_//_/\_, /
+#                                             /___/
+#
+# Created by Bespoken
+# Learn more at https://read.bespoken.io/unit-testing/getting-started/
+#
+# Skill name: "Pet Match" by Amazon
+# Test scope: LaunchRequest, PetMatchIntent, AMAZON.HelpIntent, AMAZON.StopIntent, AMAZON.CancelIntent
+# Description: General test suite for all intents
+#=====================================================================================================================
+
+---
+configuration:
+  locale: en-US
+
+---
+- test: Launch request, no further interaction
+- LaunchRequest:
+  - prompt: Welcome to pet match
+  - reprompt: What size and temperament are you looking for in a dog
+  - sessionEnded: false
+
+---
+- test: Simple utterance, no slot value provided
+- PetMatchIntent:
+  - prompt:
+    - There are dogs that are tiny, small, medium, and large
+    - What size of a dog would you like?
+- AMAZON.StopIntent: Bye
+
+---
+- test: The size and pet slot values are provided on open
+- PetMatchIntent size=small pet=dog:
+  - prompt:
+    - Would you prefer a dog to hang out with kids or to protect you?
+    - Are you looking for more of a family dog or a guard dog?
+- AMAZON.StopIntent: Bye
+
+---
+- test: Complete dialog sequence, starting with energy
+- PetMatchIntent pet=dog energy=high:
+  - prompt:
+    - There are dogs that are tiny, small, medium, and large
+    - What size of a dog would you like?
+- PetMatchIntent size=small: Are you looking for more of a family dog or a guard dog?
+- PetMatchIntent temperament=guard: So a small \n          guard \n          high \n          energy dog sounds good for you. Consider a \n          toy fox terrier
+- SessionEndedRequest:
+  - response.outputSpeech: undefined
+
+---
+- test: Disambiguation of slots
+- LaunchRequest
+- PetMatchIntent size=mini: What size are you looking for
+- PetMatchIntent size=small: Are you looking for more of a family dog or a guard dog?
+- PetMatchIntent temperament=guard: Do you prefer high energy or low energy dogs?
+- PetMatchIntent energy=low: So a small \n          guard \n          low \n          energy dog sounds good for you. Consider a \n          miniature snouser
+
+---
+- test: No matching slots
+- LaunchRequest
+- PetMatchIntent size=dummy: What size are you looking for
