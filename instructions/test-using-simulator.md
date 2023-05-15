@@ -1,7 +1,7 @@
 # Build An Alexa Hello World Skill
 <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/quiz-game/header._TTH_.png" />
 
-This skill gets you started with skill building by providing basic "Hello World" functionality that allows you to rapidly generate a voice response from Alexa.
+This skill gets you started with skill building by providing basic functionality that allows you to rapidly generate a voice response from Alexa.
 
 ## Testing Your Alexa Skill
 
