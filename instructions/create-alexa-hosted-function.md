@@ -5,7 +5,6 @@ This skill gets you started with skill building by providing basic "Hello World"
 
 ## Deploying Skill Code
 
-In the [first step of this guide](./setup-vui-alexa-hosted.md), we built the Voice User Interface (VUI) for our Alexa skill.
 On this page, we will be exploring the Alexa-Hosted code editor, and deploying our code to enable testing.
 
  * *For details on what the Alexa-Hosted skills service provides, open [this page](https://developer.amazon.com/docs/hosted-skills/build-a-skill-end-to-end-using-an-alexa-hosted-skill.html) in a new tab.*
