@@ -32,5 +32,3 @@ So far, we have created a Voice User Interface, and deployed code to a backend s
 	2. In the bottom left hand corner, click the **Logs: Amazon CloudWatch** link
 	3. Once you are in the AWS CloudWatch Management Console, you can filter your log streams. Sorting by the `Last Event Time` column and clicking the top row will show you the logs of the last invocation. You can also filter or search for a specific log output with the `Filter` input field. 
 
-
-[![Next](https://m.media-amazon.com/images/G/01/mobile-apps/dex/alexa/alexa-skills-kit/tutorials/general/buttons/button_next_customization._TTH_.png)](./customize-skill-content.md)
